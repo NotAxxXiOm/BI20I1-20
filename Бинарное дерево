@@ -1,65 +1,72 @@
 #include <iostream>
 
-struct treenode 
+struct derewo
 {
-	int data; 
- treenode* next;
- treenode* prev;
+	int data;
+	derewo* left;
+	derewo* right;
 };
-treenode* head;
+
+derewo* head;
+
 void AddList(int value, int position)
 {
- treenode* node = new treenode;
- node->data = value;
+	derewo* node = new derewo;
+	node->data = value;
 	if (head == NULL)
 	{
- node->next = node;
- node->prev = node;
- head = node;
+		node->left = node;
+		node->right = node;
+		head = node;
 	}
 	else
 	{
- treenode* p = head;
-		for (int i = position; i > 1; i--) p = p->next;
- p->prev- > >next = node;
- node->prev = p->prev;
- node->next = p;
- p->prev = node;
+		derewo* p = head;
+		for (int i = position; i > 1; i--) p = p->left;
+		p->right->left = node;
+		node->right = p->right;
+		node->left = p;
+		p->right = node;
 	}
- std::cout << "\nЭлемент добавлен...\n\n";
+	std::cout << "\nЭлемент добавлен...\n\n";
 }
-void PrintList()
+
+void PrintTree()
 {
 	if (head == NULL) std::cout << "\nСписок пуст\n\n";
 	else
 	{
- treenode* a = head;
- std::cout << "\nЭлементы списка: ";
+		derewo* a = head;
+		std::cout << "\nЭлементы списка: ";
 		do
 		{
- std::cout << a->data << " ";
- a = a->next;
- } while (a != head); std::cout << "\n\n";
+			std::cout << a->data << " ";
+			a = a->left;
+		} while (a != head); std::cout << "\n ";
 	}
 }
-int DeleteList(int position)
+
+int DeleteTree(int position)
 {
-	if (head == NULL) { std::cout << "\nСписок пуст\n\n"; return 0; }
-	if (head == head->next)
+	if (head == NULL)
+	{
+		std::cout << "\nСписок пуст\n\n"; return 0;
+	}
+	if (head == head->left)
 	{
 		delete head;
- head = NULL;
+		head = NULL;
 	}
 	else
 	{
- treenode* a = head;
-		for (int i = position; i > 1; i--) a = a->next;
-		if (a == head) head = a->next;
- a->prev- > >next = a->next;
- a->next- > >prev = a->prev;
+		derewo* a = head;
+		for (int i = position; i > 1; i--) a = a->left;
+		if (a == head) head = a->left;
+		a->right->left = a->left;
+		a->left->right = a->right;
 		delete a;
 	}
- std::cout << "\nЭлемент удален...\n\n";
+	std::cout << "\n Элемент удален...\n\n";
 }
 
 void main()
@@ -68,21 +75,23 @@ void main()
 	int value, position, x;
 	do
 	{
- std::cout << "1. Добавить элемент" << std::endl;
-		std::cout << "2. Удалить элемент" << std::endl;
-		std::cout << "3. Вывести список" << std::endl;
-		std::cout << "0. Выйти" << std::endl;
-		std::cout << "\nНомер операции > "; std::cin >> x;
+		std::cout << "Для вывода дерева нажмите 1" << std::endl;
+		std::cout << "Для добавить элемента в дерево нажмите 2" << std::endl;
+		std::cout << "Для удаления элемента нажмите 3" << std::endl;
+		std::cout << "Для выхода из программы нажмите 0 " << std::endl;
+		std::cout << "\n Введине номер операции > "; std::cin >> x;
 		switch (x)
 		{
-		case 1:
-			std::cout << "Значение > "; std::cin >> value;
-			std::cout << "Позиция > "; std::cin >> position;
-			AddList(value, position); break;
+		case 1: 
+			PrintTree(); break;
 		case 2:
-			std::cout << "Позиция > "; std::cin >> position;
-			DeleteList(position); break;
-		case 3: PrintList(); break;
+			std::cout << "Текущее значение > "; std::cin >> value;
+			std::cout << "Текущая позиция > "; std::cin >> position;
+			AddList(value, position); break;
+		case 3: 
+			std::cout << "Текущая позиция > "; std::cin >> position;
+			DeleteTree(position); break;
 		}
-	} while (x != 0);
+	} 
+	while (x != 0);
 }
