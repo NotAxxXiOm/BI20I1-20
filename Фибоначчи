@@ -1,0 +1,33 @@
+#include <iostream>
+ 
+int fibonacci(int number)
+{
+    int count = 0;
+    int fibon = 0;
+    int fibon1 = 1;
+    int fibon2 = 1;
+    
+    while(count < number)
+    {
+        if (count < 2)
+        {
+            fibon = 1;
+        }
+        else if(number >= 2)
+        {
+            fibon = fibon1 + fibon2;
+            fibon1 = fibon2;
+            fibon2 = fibon;
+        }
+        ++count;
+    }
+    
+    return fibon;
+}
+ 
+int main()
+{
+    for (int count=0; count < 13; ++count)
+        std:: cout << fibonacci(count) << " ";
+    return 0;
+}
